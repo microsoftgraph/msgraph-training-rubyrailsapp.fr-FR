@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD002 MD041 -->
 
-Dans cet exercice, vous allez utiliser [Ruby on rails](https://rubyonrails.org/) pour créer une application Web. Si vous n'avez pas encore installé de rails, vous pouvez l'installer à partir de votre interface de ligne de commande (CLI) à l'aide de la commande suivante.
+Dans cet exercice, vous allez utiliser [Ruby on rails](https://rubyonrails.org/) pour créer une application Web. Si vous n’avez pas encore installé de rails, vous pouvez l’installer à partir de votre interface de ligne de commande (CLI) à l’aide de la commande suivante.
 
 ```Shell
 gem install rails
@@ -70,9 +70,9 @@ Enfin, configurez les rails pour utiliser le nouveau magasin de session. Créez 
 Rails.application.config.session_store :active_record_store, key: '_graph_app_session'
 ```
 
-## <a name="design-the-app"></a>Concevoir l'application
+## <a name="design-the-app"></a>Concevoir l’application
 
-Commencez par mettre à jour la disposition globale de l'application. Ouvrez `./app/views/layouts/application.html.erb` et remplacez son contenu par ce qui suit.
+Commencez par mettre à jour la disposition globale de l’application. Ouvrez `./app/views/layouts/application.html.erb` et remplacez son contenu par ce qui suit.
 
 ```html
 <!DOCTYPE html>
@@ -178,13 +178,13 @@ body {
 }
 ```
 
-À présent, remplacez la page par défaut par une nouvelle. Générez un contrôleur de page d'accueil à l'aide de la commande suivante.
+À présent, remplacez la page par défaut par une nouvelle. Générez un contrôleur de page d’accueil à l’aide de la commande suivante.
 
 ```Shell
 rails generate controller Home index
 ```
 
-Configurez `index` ensuite l'action `Home` sur le contrôleur comme page par défaut de l'application. Ouvrez `./config/routes.rb` et remplacez le contenu par ce qui suit:
+Configurez `index` ensuite l’action `Home` sur le contrôleur comme page par défaut de l’application. Ouvrez `./config/routes.rb` et remplacez le contenu par ce qui suit:
 
 ```ruby
 Rails.application.routes.draw do
@@ -211,6 +211,6 @@ Ouvrez à présent `./app/view/home/index.html.erb` le fichier et remplacez son 
 </div>
 ```
 
-Enregistrez toutes vos modifications et redémarrez le serveur. À présent, l'application doit être très différente.
+Enregistrez toutes vos modifications et redémarrez le serveur. À présent, l’application doit être très différente.
 
-![Capture d'écran de la page d'accueil repensée](./images/create-app-01.png)
+![Capture d’écran de la page d’accueil repensée](./images/create-app-01.png)
