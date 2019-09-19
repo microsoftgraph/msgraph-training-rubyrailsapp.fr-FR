@@ -41,7 +41,7 @@ module OmniAuth
 
       DEFAULT_SCOPE = 'openid email profile User.Read'.freeze
 
-      # Configure the Azure v2 endpoints
+      # Configure the Microsoft identity platform endpoints
       option  :client_options,
               site:          'https://login.microsoftonline.com',
               authorize_url: '/common/oauth2/v2.0/authorize',
@@ -86,7 +86,7 @@ end
 
 Prenez un moment pour examiner ce que fait ce code.
 
-- Il définit le `client_options` pour spécifier les points de terminaison Azure v2.
+- Il définit le `client_options` pour spécifier les points de terminaison de la plateforme d’identité Microsoft.
 - Il spécifie que `scope` le paramètre doit être envoyé pendant la phase autoriser.
 - Il mappe la `id` propriété de l’utilisateur en tant qu’ID unique pour l’utilisateur.
 - Il utilise le jeton d’accès pour récupérer le profil de l’utilisateur à partir de Microsoft Graph `raw_info` pour remplir le hachage.
@@ -280,7 +280,7 @@ Ajoutez cette action à `./config/routes.rb`.
 get 'auth/signout'
 ```
 
-Maintenant, mettez à jour l’affichage `signout` pour utiliser l’action. Ouvrez `./app/views/layouts/application.html.erb`. Remplacez la ligne `<a href="#" class="dropdown-item">Sign Out</a>` par:
+Maintenant, mettez à jour l’affichage `signout` pour utiliser l’action. Ouvrez `./app/views/layouts/application.html.erb`. Remplacez la ligne `<a href="#" class="dropdown-item">Sign Out</a>` par :
 
 ```html
 <%= link_to "Sign Out", {:controller => :auth, :action => :signout}, :class => "dropdown-item" %>
@@ -290,7 +290,7 @@ Redémarrez le serveur et suivez le processus de connexion. Vous devez revenir s
 
 ![Capture d’écran de la page d’accueil après la connexion](./images/add-aad-auth-01.png)
 
-Cliquez sur Avatar de l’utilisateur dans le coin supérieur droit pour **** accéder au lien Déconnexion. Cliquez **** sur Déconnexion pour réinitialiser la session et revenir à la page d’accueil.
+Cliquez sur Avatar de l’utilisateur dans le coin supérieur droit pour accéder au lien **déconnexion** . Cliquez sur **déconnexion** pour réinitialiser la session et revenir à la page d’accueil.
 
 ![Capture d’écran du menu déroulant avec le lien Déconnexion](./images/add-aad-auth-02.png)
 
@@ -300,7 +300,7 @@ Si vous examinez attentivement le hachage généré par OmniAuth, vous remarquer
 
 Toutefois, ce jeton est éphémère. Le jeton expire une heure après son émission. C’est ici que `refresh_token` la valeur devient utile. Le jeton d’actualisation permet à l’application de demander un nouveau jeton d’accès sans demander à l’utilisateur de se reconnecter. Mettez à jour le code de gestion des jetons pour implémenter l’actualisation des jetons.
 
-Ouvrez `./app/controllers/application_controller.rb` et ajoutez les instructions `require` suivantes en haut:
+Ouvrez `./app/controllers/application_controller.rb` et ajoutez les instructions `require` suivantes en haut :
 
 ```ruby
 require 'microsoft_graph_auth'
