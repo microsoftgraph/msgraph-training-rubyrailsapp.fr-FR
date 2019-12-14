@@ -18,11 +18,12 @@ Rails crée un nouveau répertoire appelé `graph-tutorial` et génère une appl
 rails server
 ```
 
-Ouvrez votre navigateur et accédez à `http://localhost:3000`. Si tout fonctionne, vous verrez un «yay! Vous êtes sur rails. Message. Si vous ne voyez pas ce message, consultez le [Guide de prise](http://guides.rubyonrails.org/)en main des rails.
+Ouvrez votre navigateur et accédez à `http://localhost:3000`. Si tout fonctionne, vous verrez un «yay ! Vous êtes sur rails. Message. Si vous ne voyez pas ce message, consultez le [Guide de prise](http://guides.rubyonrails.org/)en main des rails.
 
-Avant de poursuivre, installez des gemmes supplémentaires que vous utiliserez plus tard:
+Avant de poursuivre, installez des gemmes supplémentaires que vous utiliserez plus tard :
 
 - [omniauth-oauth2](https://github.com/omniauth/omniauth-oauth2) pour la gestion des flux de connexion et de jetons OAuth.
+- [omniauth-rails_csrf_protection](https://github.com/cookpad/omniauth-rails_csrf_protection) pour l’ajout de la protection CSRF à omniauth.
 - [HTTParty](https://github.com/jnunemaker/httparty) pour passer des appels à Microsoft Graph.
 - [nokogiri](https://github.com/sparklemotion/nokogiri) pour traiter les corps de message html.
 - [ActiveRecord-session_store](https://github.com/rails/activerecord-session_store) pour le stockage de sessions dans la base de données.
@@ -31,13 +32,14 @@ Exécutez les commandes suivantes dans votre interface CLI.
 
 ```Shell
 bundle add omniauth-oauth2
+bundle add omniauth-rails_csrf_protection
 bundle add httparty
 bundle add nokogiri
 bundle add activerecord-session_store
 rails generate active_record:session_migration
 ```
 
-La dernière commande génère une sortie semblable à la suivante:
+La dernière commande génère une sortie semblable à la suivante :
 
 ```Shell
 create  db/migrate/20180618172216_add_sessions_table.rb
@@ -184,7 +186,7 @@ body {
 rails generate controller Home index
 ```
 
-Configurez `index` ensuite l’action `Home` sur le contrôleur comme page par défaut de l’application. Ouvrez `./config/routes.rb` et remplacez le contenu par ce qui suit:
+Configurez `index` ensuite l’action `Home` sur le contrôleur comme page par défaut de l’application. Ouvrez `./config/routes.rb` et remplacez le contenu par ce qui suit :
 
 ```ruby
 Rails.application.routes.draw do
