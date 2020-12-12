@@ -1,6 +1,6 @@
 # <a name="how-to-run-the-completed-project"></a>Exécution du projet terminé
 
-## <a name="prerequisites"></a>Conditions préalables
+## <a name="prerequisites"></a>Conditions requises
 
 Pour exécuter le projet terminé dans ce dossier, vous avez besoin des éléments suivants :
 
@@ -45,7 +45,7 @@ Si vous n’avez pas de compte Microsoft, vous disposez de deux options pour obt
 
 ## <a name="configure-the-sample"></a>Configurer l’exemple
 
-1. Renommez `./config/oauth_environment_variables.rb.example` le fichier `oauth_environment_variables.rb`.
+1. Renommez le `./config/oauth_environment_variables.rb.example` fichier `oauth_environment_variables.rb` .
 1. Modifiez le `oauth_environment_variables.rb` fichier et effectuez les modifications suivantes.
     1. Remplacez `YOUR_APP_ID_HERE` par l' **ID d’application** que vous avez obtenu à partir du portail d’inscription des applications.
     1. Remplacez `YOUR APP PASSWORD HERE` par le mot de passe que vous avez obtenu à partir du portail d’inscription des applications.
@@ -53,6 +53,12 @@ Si vous n’avez pas de compte Microsoft, vous disposez de deux options pour obt
 
     ```Shell
     bundle install
+    ```
+
+1. Dans votre interface CLI, exécutez la commande suivante pour installer les packages de fils.
+
+    ```Shell
+    yarn install
     ```
 
 1. Dans votre interface CLI, exécutez la commande suivante pour initialiser la base de données de l’application.

@@ -6,7 +6,7 @@ Dans cet exercice, vous allez étendre l’application de l’exercice précéde
 
     :::code language="ruby" source="../demo/graph-tutorial/config/oauth_environment_variables.rb.example":::
 
-1. Remplacez `YOUR_APP_ID_HERE` par l’ID de l’application dans le portail d’inscription de `YOUR_APP_SECRET_HERE` l’application et remplacez par le mot de passe que vous avez généré.
+1. Remplacez `YOUR_APP_ID_HERE` par l’ID de l’application dans le portail d’inscription de l’application et remplacez `YOUR_APP_SECRET_HERE` par le mot de passe que vous avez généré.
 
     > [!IMPORTANT]
     > Si vous utilisez le contrôle de code source tel que git, il est maintenant recommandé d’exclure le `oauth_environment_variables.rb` fichier du contrôle de code source afin d’éviter une fuite accidentelle de votre ID d’application et de votre mot de passe.
@@ -26,9 +26,9 @@ Vous avez déjà installé le `omniauth-oauth2` GEM, mais pour le faire fonction
     Prenez un moment pour examiner ce que fait ce code.
 
     - Il définit le `client_options` pour spécifier les points de terminaison de la plateforme d’identité Microsoft.
-    - Il spécifie que `scope` le paramètre doit être envoyé pendant la phase autoriser.
+    - Il spécifie que le `scope` paramètre doit être envoyé pendant la phase autoriser.
     - Il mappe la `id` propriété de l’utilisateur en tant qu’ID unique pour l’utilisateur.
-    - Il utilise le jeton d’accès pour récupérer le profil de l’utilisateur à partir de Microsoft Graph `raw_info` pour remplir le hachage.
+    - Il utilise le jeton d’accès pour récupérer le profil de l’utilisateur à partir de Microsoft Graph pour remplir le `raw_info` hachage.
     - Il remplace l’URL de rappel pour s’assurer qu’elle correspond au rappel enregistré dans le portail d’inscription des applications.
 
 1. Créez un fichier appelé `omniauth_graph.rb` dans le dossier **./config/Initializers** et ajoutez le code suivant.
@@ -47,7 +47,7 @@ Maintenant que l’intergiciel OmniAuth est configuré, vous pouvez passer à l�
     rails generate controller Auth
     ```
 
-1. Open **./app/controllers/auth_controller. RB**. Ajoutez une méthode de rappel à `AuthController` la classe. Cette méthode est appelée par le middleware OmniAuth une fois que le flux OAuth est terminé.
+1. Open **./app/controllers/auth_controller. RB**. Ajoutez une méthode de rappel à la `AuthController` classe. Cette méthode est appelée par le middleware OmniAuth une fois que le flux OAuth est terminé.
 
     ```ruby
     def callback
@@ -65,10 +65,10 @@ Maintenant que l’intergiciel OmniAuth est configuré, vous pouvez passer à l�
 
     ```ruby
     # Add route for OmniAuth callback
-    match '/auth/:provider/callback', to: 'auth#callback', via: [:get, :post]
+    match '/auth/:provider/callback', :to => 'auth#callback', :via => [:get, :post]
     ```
 
-1. Démarrez le serveur et accédez à `https://localhost:3000`. Cliquez sur le bouton de connexion. vous serez redirigé vers `https://login.microsoftonline.com`. Connectez-vous avec votre compte Microsoft et acceptez les autorisations demandées. Le navigateur redirige vers l’application en affichant le hachage généré par OmniAuth.
+1. Démarrez le serveur et accédez à `https://localhost:3000` . Cliquez sur le bouton de connexion. vous serez redirigé vers `https://login.microsoftonline.com`. Connectez-vous avec votre compte Microsoft et acceptez les autorisations demandées. Le navigateur redirige vers l’application en affichant le hachage généré par OmniAuth.
 
     ```json
     {
@@ -85,20 +85,50 @@ Maintenant que l’intergiciel OmniAuth est configuré, vous pouvez passer à l�
       },
       "extra": {
         "raw_info": {
-          "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users/$entity",
-          "id": "eb52b3b2-c4ac-4b4f-bacd-d5f7ece55df0",
-          "businessPhones": [
-            "+1 425 555 0109"
-          ],
-          "displayName": "Adele Vance",
-          "givenName": "Adele",
-          "jobTitle": "Retail Manager",
-          "mail": "AdeleV@contoso.onmicrosoft.com",
-          "mobilePhone": null,
-          "officeLocation": "18/2111",
-          "preferredLanguage": "en-US",
-          "surname": "Vance",
-          "userPrincipalName": "AdeleV@contoso.onmicrosoft.com"
+          "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#users(displayName,mail,mailboxSettings,userPrincipalName)/$entity",
+          "displayName": "Lynne Robbins",
+          "mail": "LynneR@contoso.OnMicrosoft.com",
+          "userPrincipalName": "LynneR@contoso.OnMicrosoft.com",
+          "id": "d294e784-840e-4f9f-bb1e-95c0a75f2f18@2d18179c-4386-4cbd-8891-7fd867c4f62e",
+          "mailboxSettings": {
+            "archiveFolder": "AAMkAGI2...",
+            "timeZone": "Pacific Standard Time",
+            "delegateMeetingMessageDeliveryOptions": "sendToDelegateOnly",
+            "dateFormat": "M/d/yyyy",
+            "timeFormat": "h:mm tt",
+            "automaticRepliesSetting": {
+              "status": "disabled",
+              "externalAudience": "all",
+              "internalReplyMessage": "",
+              "externalReplyMessage": "",
+              "scheduledStartDateTime": {
+                "dateTime": "2020-12-09T17:00:00.0000000",
+                "timeZone": "UTC"
+              },
+              "scheduledEndDateTime": {
+                "dateTime": "2020-12-10T17:00:00.0000000",
+                "timeZone": "UTC"
+              }
+            },
+            "language": {
+              "locale": "en-US",
+              "displayName": "English (United States)"
+            },
+            "workingHours": {
+              "daysOfWeek": [
+                "monday",
+                "tuesday",
+                "wednesday",
+                "thursday",
+                "friday"
+              ],
+              "startTime": "08:00:00.0000000",
+              "endTime": "17:00:00.0000000",
+              "timeZone": {
+                "name": "Pacific Standard Time"
+              }
+            }
+          }
         }
       }
     }
@@ -125,6 +155,10 @@ Maintenant que vous pouvez obtenir des jetons, nous vous conseillons d’implém
       session[:user_email]
     end
 
+    def user_timezone
+      session[:user_timezone]
+    end
+
     def access_token
       session[:graph_token_hash][:token]
     end
@@ -134,7 +168,7 @@ Maintenant que vous pouvez obtenir des jetons, nous vous conseillons d’implém
 
     :::code language="ruby" source="../demo/graph-tutorial/app/controllers/application_controller.rb" id="BeforeActionSnippet":::
 
-    Cette méthode définit les variables que la mise en page (dans **application. html. Erb**) utilise pour afficher les informations de l’utilisateur dans la barre de navigation. En l’ajoutant ici, il n’est pas nécessaire d’ajouter ce code dans chaque action de contrôleur. Toutefois, cette opération s’exécute également pour les actions `AuthController`dans le, ce qui n’est pas optimal.
+    Cette méthode définit les variables que la mise en page (dans **application.html. Erb**) utilise pour afficher les informations de l’utilisateur dans la barre de navigation. En l’ajoutant ici, il n’est pas nécessaire d’ajouter ce code dans chaque action de contrôleur. Toutefois, cette opération s’exécute également pour les actions dans le `AuthController` , ce qui n’est pas optimal.
 
 1. Ajoutez le code suivant à la `AuthController` classe dans **./app/Controllers/auth_controller. RB** pour ignorer l’action avant.
 
@@ -142,7 +176,7 @@ Maintenant que vous pouvez obtenir des jetons, nous vous conseillons d’implém
     skip_before_action :set_user
     ```
 
-1. Mettez à `callback` jour la fonction `AuthController` dans la classe pour stocker les jetons dans la session et redirigez la redirection vers la page principale. Remplacez la fonction `callback` existante par ce qui suit.
+1. Mettez à jour la `callback` fonction dans la `AuthController` classe pour stocker les jetons dans la session et redirigez la redirection vers la page principale. Remplacez la fonction `callback` existante par ce qui suit.
 
     :::code language="ruby" source="../demo/graph-tutorial/app/controllers/auth_controller.rb" id="CallbackSnippet":::
 
@@ -170,11 +204,11 @@ Avant de tester cette nouvelle fonctionnalité, ajoutez une méthode pour vous d
 
 ## <a name="refreshing-tokens"></a>Actualisation des jetons
 
-Si vous examinez attentivement le hachage généré par OmniAuth, vous remarquerez qu’il y a deux jetons dans le `token` hachage `refresh_token`: et. La valeur dans `token` est le jeton d’accès, qui est envoyé dans `Authorization` l’en-tête des appels d’API. Il s’agit du jeton qui permet à l’application d’accéder à Microsoft Graph pour le compte de l’utilisateur.
+Si vous examinez attentivement le hachage généré par OmniAuth, vous remarquerez qu’il y a deux jetons dans le hachage : `token` et `refresh_token` . La valeur dans `token` est le jeton d’accès, qui est envoyé dans l' `Authorization` en-tête des appels d’API. Il s’agit du jeton qui permet à l’application d’accéder à Microsoft Graph pour le compte de l’utilisateur.
 
-Cependant, ce jeton est de courte durée. Le jeton expire une heure après son émission. C’est ici que `refresh_token` la valeur devient utile. Le jeton d’actualisation permet à l’application de demander un nouveau jeton d’accès sans obliger l’utilisateur à se reconnecter. Mettez à jour le code de gestion des jetons pour implémenter l’actualisation des jetons.
+Cependant, ce jeton est de courte durée. Le jeton expire une heure après son émission. C’est ici que la `refresh_token` valeur devient utile. Le jeton d’actualisation permet à l’application de demander un nouveau jeton d’accès sans obliger l’utilisateur à se reconnecter. Mettez à jour le code de gestion des jetons pour implémenter l’actualisation des jetons.
 
-1. Ouvrez **./app/controllers/application_controller. RB** et ajoutez les instructions `require` suivantes en haut :
+1. Ouvrez **./app/controllers/application_controller. RB** et ajoutez les `require` instructions suivantes en haut :
 
     ```ruby
     require 'microsoft_graph_auth'
@@ -187,7 +221,7 @@ Cependant, ce jeton est de courte durée. Le jeton expire une heure après son �
 
     Cette méthode utilise la marque [oauth2](https://github.com/oauth-xx/oauth2) (une dépendance de la `omniauth-oauth2` gemme) pour actualiser les jetons et met à jour la session.
 
-1. Remplacez la méthode `access_token` actuelle par ce qui suit.
+1. Remplacez la `access_token` méthode actuelle par ce qui suit.
 
     :::code language="ruby" source="../demo/graph-tutorial/app/controllers/application_controller.rb" id="AccessTokenSnippet":::
 

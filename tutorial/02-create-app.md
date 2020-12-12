@@ -5,7 +5,7 @@ Dans cet exercice, vous allez utiliser [Ruby on rails](https://rubyonrails.org/)
 1. Si vous n’avez pas encore installé de rails, vous pouvez l’installer à partir de votre interface de ligne de commande (CLI) à l’aide de la commande suivante.
 
     ```Shell
-    gem install rails -v 6.0.2.2
+    gem install rails -v 6.0.3.4
     ```
 
 1. Ouvrez votre interface CLI, accédez à un répertoire où vous disposez des droits nécessaires pour créer des fichiers, puis exécutez la commande suivante pour créer une application de rails.
@@ -56,11 +56,11 @@ Avant de poursuivre, installez des gemmes supplémentaires que vous utiliserez p
 
 Dans cette section, vous allez créer l’interface utilisateur de base pour l’application.
 
-1. Ouvrez **./app/views/layouts/application.html.Erb** et remplacez son contenu par ce qui suit.
+1. Ouvrez **/app/views/layouts/application.html. Erb** et remplacez son contenu par ce qui suit.
 
     :::code language="html" source="../demo/graph-tutorial/app/views/layouts/application.html.erb" id="LayoutSnippet":::
 
-    Ce code ajoute [Bootstrap](http://getbootstrap.com/) pour la mise en forme simple et [Font Awesome](https://fontawesome.com/) pour certaines icônes simples. Il définit également une disposition globale avec une barre de navigation.
+    Ce code ajoute [bootstrap](http://getbootstrap.com/) pour les styles simples et [Fabric Core](https://developer.microsoft.com/fluentui#/get-started#fabric-core) pour certaines icônes simples. Il définit également une disposition globale avec une barre de navigation.
 
 1. Ouvrez **./app/Assets/StyleSheets/application.CSS** et ajoutez le code suivant à la fin du fichier.
 
@@ -72,7 +72,7 @@ Dans cette section, vous allez créer l’interface utilisateur de base pour l�
     rails generate controller Home index
     ```
 
-1. Configurez l' `index` action `Home` sur le contrôleur comme page par défaut de l’application. Ouvrez **./config/routes.RB** et remplacez son contenu par ce qui suit :
+1. Configurez l' `index` action sur le `Home` contrôleur comme page par défaut de l’application. Ouvrez **./config/routes.RB** et remplacez son contenu par ce qui suit :
 
     ```ruby
     Rails.application.routes.draw do
@@ -84,9 +84,11 @@ Dans cette section, vous allez créer l’interface utilisateur de base pour l�
     end
     ```
 
-1. Ouvrez **./app/View/Home/index.html.Erb** et remplacez son contenu par ce qui suit.
+1. Ouvrez **/app/view/home/index.html. Erb** et remplacez son contenu par ce qui suit.
 
     :::code language="html" source="../demo/graph-tutorial/app/views/home/index.html.erb" id="HomeSnippet":::
+
+1. Ajoutez un fichier PNG nommé **no-profile-photo.png** dans le répertoire **./app/Assets/images** .
 
 1. Enregistrez toutes vos modifications et redémarrez le serveur. À présent, l’application doit être très différente.
 
